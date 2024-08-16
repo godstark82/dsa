@@ -12,8 +12,7 @@
 //* It takes [N-1] Passes to complete the sorting where N is the length
 
 void main() {
-  List<int> nums = [1, 5, 4, 2, 7, 90, 23];
-
+  List<int> nums = [9,8,7,6,5,4,3,2,1];
   print(nums);
   print(selectionSort(nums, nums.length));
 }

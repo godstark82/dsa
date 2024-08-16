@@ -4,26 +4,24 @@ using namespace std;
 
 int *bubbleSort(int *nums, int length)
 {
-    int swaps = 0, compares = 0;
     for (int i = 0; i < length - 1; i++)
     {
 
         for (int j = 0; j < length - i - 1; j++)
         {
-            compares++;
+        
             if (nums[j] > nums[j + 1])
             {
 
                 int temp = nums[j + 1];
                 nums[j + 1] = nums[j];
                 nums[j] = temp;
-                swaps++;
+            
             }
         }
     }
 
-    cout << "Total Compare : " << compares << endl;
-    cout << "Total Swaps : " << swaps << endl;
+
     return nums;
 }
 
@@ -38,7 +36,7 @@ void printList(int *nums, int length)
 
 int main()
 {
-    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8};
+    int arr[] = {1,2,3,4,5,6,7,8};
     int length = 8;
     printList(arr, length);
     int *sortedArray = bubbleSort(arr, length);
