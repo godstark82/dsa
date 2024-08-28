@@ -17,13 +17,22 @@ typedef struct node
 
 class LinkedList
 {
-    Node *head;
 
 public:
-    LinkedList(Node *head)
+    Node *head;
+    LinkedList(int data)
     {
-        this->head = head;
-        this->head->next = nullptr;
+        Node *newNode = new Node(data);
+        this->head = newNode;
+    }
+
+    //! From Array
+    void convertArrayToLL(int *arr, int n)
+    {
+        for (int i = n - 1; i >= 0; i--)
+        {
+            insertFirst(arr[i]);
+        }
     }
 
     //! Insertion
@@ -61,26 +70,29 @@ public:
     }
     void insertAfter(int data, int after)
     {
-        auto current = head;
-
         if (head == nullptr)
         {
             return;
         }
 
-        auto temp = new Node(data);
+        Node *current = head;
 
-        while (current->next != nullptr)
+        while (current != nullptr && current->data != after)
         {
-            if (current->next->data == after)
-            {
-                break;
-            }
+            current = current->next;
         }
-        auto temp2 = current->next->next;
+
+        if (current == nullptr)
+        {
+            return;
+        }
+
+        Node *temp = new Node(data);
+
+        temp->next = current->next;
         current->next = temp;
-        temp->next = temp2;
     }
+
     //! Delete
     void remove(int data)
     {
@@ -120,14 +132,14 @@ public:
         {
             return;
         }
-        auto current = head;
+        Node *current = head;
 
-        while (current->next != nullptr)
+        while (current->next->next != nullptr)
         {
             current = current->next;
         }
-        delete current;
-        current = nullptr;
+        delete current->next;
+        current->next = nullptr;
     }
     //! Others
     void print()
@@ -141,8 +153,8 @@ public:
         }
         cout << "NULL" << endl;
     }
-
     int length()
+
     {
         int count = 0;
         Node *current = head;
@@ -153,16 +165,70 @@ public:
         }
         return count;
     }
+
+    //! Related To Sorting
+    void swap(int a, int b)
+    {
+        if (a == b)
+            return;
+
+        Node *prevX = nullptr, *prevY = nullptr;
+        Node *currX = head, *currY = head;
+
+        //! Finding the X Node
+        while (currX != nullptr && currX->data != a)
+        {
+            prevX = currX;
+            currX = currX->next;
+        }
+
+        //! Finding the Y Node
+        while (currY != nullptr && currY->data != b)
+        {
+            prevY = currY;
+            currY = currY->next;
+        }
+
+        if (currX == nullptr || currY == nullptr)
+            return;
+
+        //! if X is not the head
+        if (prevX != nullptr)
+        {
+            prevX->next = currY;
+        }
+        else
+        {
+            head = currY;
+        }
+
+        //! If Y is not the head
+        if (prevY != nullptr)
+        {
+            prevY->next = currX;
+        }
+        else
+        {
+            head = currX;
+        }
+
+        //! Swap the Nodes
+        Node *temp = currX->next;
+        currX->next = currY->next;
+        currY->next = temp;
+    }
 };
 
 int main()
 {
-    Node *headNode = new Node(1);
-    LinkedList ll = LinkedList(headNode);
-    ll.insertFirst(0);
-    ll.insertLast(5);
+    LinkedList ll = LinkedList(1);
+    int arr[] = {4, 3, 5, 2, 7, 1};
 
-    ll.remove(0);
+    ll.convertArrayToLL(arr, 5);
+
+    ll.print();
+
+    ll.swap(4,1);
 
     cout << "The length of LinkedList is : " << ll.length() << endl;
     ll.print();
