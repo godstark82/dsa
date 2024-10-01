@@ -1,74 +1,82 @@
 import 'dart:io';
 
-int main(List<String> args) {
-  LinkedList<int> ll = LinkedList<int>();
-  ll.addFirst(3);
-  ll.addFirst(2);
-  ll.addLast(56);
-  ll.printList();
-  return 0;
-}
-
-class Node<E> {
-  final E data;
-  Node<E>? next;
+class Node<T> {
+  T data;
+  Node<T>? next;
 
   Node(this.data, {this.next});
 }
 
-class LinkedList<E> {
-  Node<E>? head;
+class LinkedList<T> {
+  Node<T>? head;
 
-  LinkedList({this.head});
-
-  bool get isEmpty => head == null;
-  bool get isNotEmpty => !isEmpty;
-
-  void addFirst(E data) {
-    if (isEmpty) {
-      head = Node<E>(data);
-      return;
-    }
-    Node<E>? tempNode = head;
-    head = Node<E>(data, next: tempNode);
+  LinkedList(T data) {
+    head = Node(data);
+    head?.next = null;
   }
 
-  void addLast(E data) {
-    final newNode = Node<E>(data);
-    if (isEmpty) {
-      head = newNode;
+  void insertAtBeginning(T data) {
+    Node<T> tempNode = Node(data);
+    if (head == null) {
+      head = tempNode;
       return;
     }
-    Node<E>? currentNode = head;
-    while (head?.next != null) {
-      currentNode = currentNode?.next;
+    tempNode.next = head;
+    head = tempNode;
+  }
+
+  void insertAtEnd(T data) {
+    Node<T> tempNode = Node(data);
+
+    if (head == null) {
+      head = tempNode;
+      return;
     }
-    currentNode?.next = newNode;
+
+    Node<T> currentNode = head!;
+
+    while (currentNode.next != null) {
+      currentNode = currentNode.next!;
+    }
+    currentNode.next = tempNode;
   }
 
   void removeFirst() {
-    if (isEmpty) {
+    if (head == null) {
       return;
     }
-    head = head?.next;
+    head = head!.next;
   }
 
   void removeLast() {
-    if (isEmpty) {
+    if (head == null) {
       return;
     }
-    Node<E>? currentNode = head;
-    while (currentNode?.next == null) {
-      currentNode = currentNode?.next;
+    Node<T>? current = head;
+
+    while (current?.next?.next != null) {
+      current = current?.next;
     }
-    currentNode = null;
+
+    current!.next = null;
   }
 
-  void printList() {
-    Node<E>? currentNode = head;
-    while (currentNode != null) {
-      stdout.write("${currentNode.data} -> ");
-      currentNode = currentNode.next;
+  void printll() {
+    Node<T>? current = head;
+
+    while (current != null) {
+      stdout.write(current.data.toString() + ' -> ');
+      current = current.next;
     }
+    print('NULL');
   }
+}
+
+void main(List<String> args) {
+  LinkedList ll = LinkedList(1);
+  ll.insertAtEnd(2);
+  ll.insertAtBeginning(0);
+  // ll.removeLast();
+  // ll.removeFirst();
+  ll.printll();
 }

@@ -11,13 +11,15 @@ class Stack<T> {
         '\n ------';
   }
 
+  int get length => _storage.length;
+
   void push(T element) {
     _storage.add(element);
   }
 
-  T pop() => _storage.removeLast();
+  T? pop() => _storage.removeLast();
 
-  T get peek => _storage.last;
+  T? get peek => _storage.last ?? null;
 
   bool get isEmpty => _storage.isEmpty;
 

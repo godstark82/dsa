@@ -1,15 +1,15 @@
-int countInArray(List<int> nums, int value) {
-  Map<int, int> countMap = {};
+void main(List<String> args) {
+  List<int> nums = [1, 2, 1, 2, 2, 3, 4, 5, 4, 3, 5, 6];
 
-  for (int i = 0; i < nums.length; i++) {
-    countMap[nums[i]] = (countMap[nums[i]] ?? 0) + 1;
+  nums.sort();
+
+  int length = nums.elementAt(nums.length - 1);
+
+  List<int> resultArray = List.filled(length, 0);
+
+  for (int i = 0; i < nums.length-1; i++) {
+    resultArray[nums[i]] += 1;
   }
 
-  return countMap[value] ?? 0;
-}
-
-void main() {
-  List<int> list = [2, 4, 3, 2, 3, 4, 3, 2, 13, 6];
-
-  print(countInArray(list, 2349238));
+  print(resultArray);
 }

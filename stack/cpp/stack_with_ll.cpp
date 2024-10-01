@@ -1,87 +1,58 @@
 #include <iostream>
 using namespace std;
 
-typedef struct node
-{
-    int data;
-    struct node *next;
+#define MAX 50
 
-    node(int value)
+class Stack
+{
+private:
+    int data[MAX];
+    int top;
+
+public:
+    Stack()
     {
-        data = value;
-        next = nullptr;
+        top = -1;
     }
-} Node;
-
-typedef struct stack
-{
-    Node *top;
-
-    stack()
+    void push(int value)
     {
-        top = nullptr;
-    }
-} Stack;
-
-void push(Stack *s, int value)
-{
-    Node *newNode = new Node(value);
-    newNode->next = s->top;
-    s->top = newNode;
-}
-
-int pop(Stack *s)
-{
-    if (s->top == nullptr)
-    {
-        cout << "Stack is Already Empty " << endl;
-        return -1;
-    }
-    Node *temp = s->top;
-    int poppedValue = temp->data;
-    s->top = s->top->next;
-    delete temp;
-    return poppedValue;
-}
-
-int peek(Stack *s)
-{
-    return s->top->data;
-}
-
-bool isEmpty(Stack *s)
-{
-    return (s->top == NULL);
-}
-
-bool isNotEmpty(Stack *s)
-{
-    return (!isEmpty(s));
-}
-
-void printStack(Stack *s)
-{
-    Node *current = s->top;
-    if (current == nullptr)
-    {
-        cout << "Stack is empty." << endl;
-        return;
+        top++;
+        data[top] = value;
     }
 
-    cout << "Stack elements: ";
-    while (current != nullptr)
+    int pop()
     {
-        cout << current->data << " ";
-        current = current->next;
+        int popValue = data[top];
+        top--;
+        return popValue;
     }
-    cout << endl;
-}
 
+    int peek()
+    {
+        if (top == -1)
+        {
+            cout << "Stack UnderFlow" << endl;
+            return -1;
+        }
+        return data[top];
+    }
+
+    bool empty()
+    {
+        return (top == -1);
+    }
+
+    bool full()
+    {
+        return (top == MAX - 1);
+    }
+};
 int main()
 {
-    Stack *s = new Stack;
-
-    printStack(s);
-
+    Stack s = Stack();
+    s.push(3);
+    s.push(2);
+    s.pop();
+    cout << s.peek();
     return 0;
 }

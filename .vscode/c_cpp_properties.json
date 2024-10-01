@@ -14,6 +14,7 @@
             "compilerPath": "cl.exe",
             "cStandard": "c17",
             "cppStandard": "c++17",
+            "configurationProvider": "ms-vscode.cpptools",
             "intelliSenseMode": "windows-msvc-x64"
         }
     ],
